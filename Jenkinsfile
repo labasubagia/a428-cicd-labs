@@ -1,8 +1,8 @@
 node {
-    properties([
-        pipelineTriggers([pollSCM('H/2 * * * *')])
-    ])
-    docker.image('node:16-buster-slim').inside('-p 3000:3000') {
+    triggers {
+        pollSCM('*/2 * * * *')
+    }
+    withDockerContainer(image: 'node:16-buster-slim', args: '-p 3000:3000') {
         stage('Build') {
             steps {
                 sh 'npm install'
